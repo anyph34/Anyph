@@ -1,0 +1,629 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Anyph Kipngetich · Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-secondary: #334155;
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --border: #e2e8f0;
+      --shadow: 0 12px 24px -8px rgba(0,0,0,0.08);
+      --card-bg: #ffffff;
+      --footer-bg: #0f172a;
+      --footer-text: #e2e8f0;
+      --tag-bg: #eef2ff;
+      --tag-text: #2563eb;
+      --transition: 0.3s ease;
+    }
+    body.dark {
+      --bg: #0b1120;
+      --surface: #1e293b;
+      --text: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --primary: #60a5fa;
+      --primary-light: #3b82f6;
+      --border: #334155;
+      --shadow: 0 12px 24px -8px rgba(0,0,0,0.6);
+      --card-bg: #1e293b;
+      --footer-bg: #020617;
+      --footer-text: #cbd5e1;
+      --tag-bg: #1e293b;
+      --tag-text: #93c5fd;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.5;
+      transition: background var(--transition), color var(--transition);
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .container {
+      width: 92%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .navbar {
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+      transition: background var(--transition), border var(--transition);
+    }
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      flex-wrap: wrap;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .nav-link {
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+      font-size: 1rem;
+    }
+    .nav-link:hover {
+      color: var(--primary);
+    }
+    .dark-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      width: 44px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .toggle-thumb {
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50%;
+      transition: transform 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+    }
+    body.dark .toggle-thumb {
+      transform: translateX(18px);
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      gap: 5px;
+      padding: 5px;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background: var(--text);
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      background: var(--surface);
+      padding: 1rem 0;
+      gap: 1.2rem;
+      border-top: 1px solid var(--border);
+    }
+    .mobile-nav a {
+      font-weight: 500;
+      color: var(--text);
+      padding: 0.25rem 0;
+    }
+    .show-mobile {
+      display: flex !important;
+    }
+    .hero {
+      padding: 5rem 0 4rem;
+      text-align: center;
+      background: linear-gradient(145deg, var(--surface), var(--bg));
+      transition: background var(--transition);
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(to right, var(--primary), #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    .hero-education {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+    .resume-btn {
+      background: var(--primary);
+      color: white;
+      padding: 0.9rem 2.2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.2s, transform 0.2s;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .resume-btn:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+    }
+    .about-section {
+      padding: 4rem 0;
+    }
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+    .about-text {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin-bottom: 1rem;
+    }
+    .projects-section {
+      padding: 4rem 0;
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.8rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s, border-color 0.25s;
+      cursor: pointer;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary);
+    }
+    .project-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.8rem;
+    }
+    .project-card p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    .project-tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1rem;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-content {
+      background: var(--surface);
+      border-radius: 24px;
+      max-width: 600px;
+      width: 100%;
+      padding: 2rem;
+      position: relative;
+      border: 1px solid var(--border);
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      background: transparent;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+    .modal-content h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .modal-content p {
+      color: var(--text-secondary);
+      margin-bottom: 1.2rem;
+    }
+    .skills-section {
+      padding: 4rem 0;
+    }
+    .skills-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+    }
+    .skill-tag {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 0.6rem 1.4rem;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .contact-section {
+      padding: 4rem 0;
+    }
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .contact-info a {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+      font-size: 1.1rem;
+      transition: color 0.2s;
+    }
+    .contact-info a:hover {
+      color: var(--primary-light);
+    }
+    .contact-info i {
+      font-size: 1.5rem;
+      width: 24px;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      max-width: 600px;
+      margin-top: 2rem;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      padding: 0.9rem 1.2rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 1rem;
+      transition: border 0.2s;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .contact-form button {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .contact-form button:hover {
+      background: var(--primary-light);
+    }
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .social-links a {
+      font-size: 2rem;
+      color: var(--text-secondary);
+      transition: color 0.2s, transform 0.2s;
+    }
+    .social-links a:hover {
+      color: var(--primary);
+      transform: scale(1.1);
+    }
+    .footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 2rem 0;
+      text-align: center;
+      margin-top: 2rem;
+      transition: background var(--transition);
+    }
+    .footer p {
+      margin-bottom: 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+      .section-title {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container nav-container">
+      <span class="logo">Anyph K.</span>
+      <div class="nav-menu">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <button class="dark-toggle" id="darkToggle" aria-label="Toggle dark mode">
+          <span class="toggle-thumb"><i class="fas fa-moon"></i></span>
+        </button>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <div class="container" style="display:flex; flex-direction:column; gap:1rem;">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <button class="dark-toggle" id="darkToggleMobile" style="align-self:flex-start; display:flex; align-items:center; gap:0.5rem; background:transparent; border:1px solid var(--border); border-radius:30px; padding:4px 10px; cursor:pointer;">
+          <span style="color:var(--text);"><i class="fas fa-moon"></i> Dark mode</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero" id="hero">
+    <div class="container">
+      <h1>Anyph Kipngetich</h1>
+      <p class="hero-subtitle">Diploma in Credit · Laikipia University</p>
+      <span class="hero-education">Diploma, Credit in Laikipia University</span>
+      <br>
+      <a href="#" class="resume-btn" download><i class="fas fa-download"></i> Download Resume</a>
+    </div>
+  </section>
+
+  <section class="about-section" id="about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <p class="about-text">
+        I'm Anyph Kipngetich, a passionate developer and problem-solver based in Kenya. I hold a Diploma with Credit from Laikipia University. I enjoy building clean, user-friendly digital experiences and continuously learning new technologies.
+      </p>
+      <p class="about-text">
+        This portfolio showcases my work, skills, and the projects I've been crafting. Feel free to explore and reach out for collaborations.
+      </p>
+    </div>
+  </section>
+
+  <section class="projects-section" id="projects">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card" data-project="project1">
+          <h3>Project 1</h3>
+          <p>Placeholder description for your first project. Click to view details.</p>
+          <span class="project-tag">Web App</span>
+        </div>
+        <div class="project-card" data-project="project2">
+          <h3>Project 2 (coming soon)</h3>
+          <p>You can add another project here later.</p>
+          <span class="project-tag">Design</span>
+        </div>
+        <div class="project-card" data-project="project3">
+          <h3>Project 3 (coming soon)</h3>
+          <p>Reserved for your future work.</p>
+          <span class="project-tag">Mobile</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <h3 id="modalTitle">Project 1</h3>
+      <p id="modalDescription">This is the detail view for Project 1. Replace this text with your project description, tech stack, screenshots, links, etc.</p>
+      <p><strong>Tech used:</strong> HTML, CSS, JavaScript</p>
+    </div>
+  </div>
+
+  <section class="skills-section" id="skills">
+    <div class="container">
+      <h2 class="section-title">Skills & Tech Stack</h2>
+      <div class="skills-tags">
+        <span class="skill-tag"><i class="fab fa-html5"></i> HTML5</span>
+        <span class="skill-tag"><i class="fab fa-css3-alt"></i> CSS3</span>
+        <span class="skill-tag"><i class="fab fa-js"></i> JavaScript</span>
+        <span class="skill-tag"><i class="fab fa-react"></i> React</span>
+        <span class="skill-tag"><i class="fab fa-node"></i> Node.js</span>
+        <span class="skill-tag"><i class="fas fa-database"></i> SQL</span>
+        <span class="skill-tag"><i class="fab fa-git-alt"></i> Git</span>
+        <span class="skill-tag"><i class="fas fa-code"></i> C++</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact Me</h2>
+      <div class="contact-info">
+        <a href="mailto:anyphkipngetich@gmail.com"><i class="fas fa-envelope"></i> anyphkipngetich@gmail.com</a>
+        <a href="tel:+254712345678"><i class="fas fa-phone"></i> +254 712 345 678</a>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      <div class="social-links">
+        <a href="https://github.com" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:anyphkipngetich@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Anyph Kipngetich. All rights reserved.</p>
+      <p>Diploma in Credit · Laikipia University</p>
+    </div>
+  </footer>
+
+  <script>
+    const body = document.body;
+    const darkToggle = document.getElementById('darkToggle');
+    const darkToggleMobile = document.getElementById('darkToggleMobile');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    const projectCards = document.querySelectorAll('.project-card');
+    const contactForm = document.getElementById('contactForm');
+
+    function toggleDarkMode() {
+      body.classList.toggle('dark');
+      const icon = darkToggle.querySelector('i');
+      if (body.classList.contains('dark')) {
+        icon.className = 'fas fa-sun';
+      } else {
+        icon.className = 'fas fa-moon';
+      }
+    }
+
+    darkToggle.addEventListener('click', toggleDarkMode);
+    darkToggleMobile.addEventListener('click', toggleDarkMode);
+
+    hamburgerBtn.addEventListener('click', () => {
+      mobileNav.classList.toggle('show-mobile');
+    });
+
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('show-mobile');
+      });
+    });
+
+    projectCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const projectName = card.getAttribute('data-project');
+        if (projectName === 'project1') {
+          modalTitle.textContent = 'Project 1';
+          modalDescription.textContent = 'This is your first project. Add detailed description, screenshots, and links here. You can edit this text in the HTML.';
+        } else {
+          modalTitle.textContent = card.querySelector('h3').textContent;
+          modalDescription.textContent = 'Details for this project will be added soon.';
+        }
+        modalOverlay.classList.add('active');
+      });
+    });
+
+    modalClose.addEventListener('click', () => {
+      modalOverlay.classList.remove('active');
+    });
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) {
+        modalOverlay.classList.remove('active');
+      }
+    });
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Thank you for your message! I will get back to you soon.');
+      contactForm.reset();
+    });
+  </script>
+</body>
+</html>
